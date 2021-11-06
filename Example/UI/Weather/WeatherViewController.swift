@@ -88,14 +88,14 @@ private extension UIImageView {
     func set(weather: Weather) {
         switch weather {
         case .sunny:
-            self.image = R.image.sunny()
-            self.tintColor = R.color.red()
+            self.image = UIImage(named: "Sunny")
+            self.tintColor = UIColor(named: "Red")
         case .cloudy:
-            self.image = R.image.cloudy()
-            self.tintColor = R.color.gray()
+            self.image = UIImage(named: "Cloudy")
+            self.tintColor = UIColor(named: "Gray")
         case .rainy:
-            self.image = R.image.rainy()
-            self.tintColor = R.color.blue()
+            self.image = UIImage(named: "Rainy")
+            self.tintColor = UIColor(named: "Blue")
         }
     }
 }
