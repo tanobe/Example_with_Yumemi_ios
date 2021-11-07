@@ -70,8 +70,13 @@ class WeatherViewController: UIViewController {
             case .jsonDecodeError:
                 message = "Jsonデコードに失敗しました。"
             case .unknownError:
-                message = "エラーが発生しました。"
+                message = "unknownエラーが発生しました。"
+            case .invalidError:
+                message = "invalidエラーが発生しました。"
+            case .other:
+                message = "otherエラーが発生しました。"
             }
+            
             
             let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
