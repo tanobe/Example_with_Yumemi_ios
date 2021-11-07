@@ -40,17 +40,25 @@ class WeatherModelImpl: WeatherModel {
     }
     
     func fetchWeather(at area: String, date: Date, completion: @escaping (Result<Response, WeatherError>) -> Void) {
-        let request = Request(area: area, date: date)
-        if let requestJson = try? jsonString(from: request) {
-            DispatchQueue.global().async {
-                if let responseJson = try? YumemiWeather.syncFetchWeather(requestJson) {
-                    if let response = try? self.response(from: responseJson) {
-                        completion(.success(response))
-                    }
-                    else {
-                        completion(.failure(WeatherError.jsonDecodeError))
-                    }
+        
+        DispatchQueue.global().async {
+            do {
+                let request = Request(area: area, date: date)
+                guard let requestJson = try? self.jsonString(from: request) else {
+                    return completion(.failure(WeatherError.jsonEncodeError))
                 }
+                let weather = try YumemiWeather.syncFetchWeather(requestJson)
+                guard let response = try? self.response(from: weather) else {
+                    return completion(.failure(WeatherError.jsonDecodeError))
+                }
+                return completion(.success(response))
+                
+            } catch YumemiWeatherError.invalidParameterError {
+                return completion(.failure(.invalidError))
+            } catch YumemiWeatherError.unknownError {
+                return completion(.failure(.unknownError))
+            } catch {
+                return completion(.failure(.other))
             }
         }
     }
