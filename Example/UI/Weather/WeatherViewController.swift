@@ -76,17 +76,17 @@ class WeatherViewController: UIViewController {
             case .other:
                 message = "otherエラーが発生しました。"
             }
-            
-            
-            let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
-                self.dismiss(animated: true) {
-                    print("Close ViewController by \(alertController)")
-                }
-            })
-            self.present(alertController, animated: true, completion: nil)
+            let confirmAction: UIAlertAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default)
+            showApiErrorAlert(title: "Error", message: message, action: confirmAction)
         }
     }
+    
+    func showApiErrorAlert(title: String, message: String, action: UIAlertAction) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(action)
+        present(alert, animated: true)
+    }
+    
 }
 
 private extension UIImageView {
