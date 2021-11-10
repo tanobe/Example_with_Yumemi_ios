@@ -70,8 +70,13 @@ class WeatherViewController: UIViewController {
             case .jsonDecodeError:
                 message = "Jsonデコードに失敗しました。"
             case .unknownError:
-                message = "エラーが発生しました。"
+                message = "unknownエラーが発生しました。"
+            case .invalidError:
+                message = "invalidエラーが発生しました。"
+            case .other:
+                message = "otherエラーが発生しました。"
             }
+            
             
             let alertController = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "OK", style: .default) { _ in
@@ -88,14 +93,14 @@ private extension UIImageView {
     func set(weather: Weather) {
         switch weather {
         case .sunny:
-            self.image = R.image.sunny()
-            self.tintColor = R.color.red()
+            self.image = UIImage(named: "Sunny")
+            self.tintColor = UIColor(named: "Red")
         case .cloudy:
-            self.image = R.image.cloudy()
-            self.tintColor = R.color.gray()
+            self.image = UIImage(named: "Cloudy")
+            self.tintColor = UIColor(named: "Gray")
         case .rainy:
-            self.image = R.image.rainy()
-            self.tintColor = R.color.blue()
+            self.image = UIImage(named: "Rainy")
+            self.tintColor = UIColor(named: "Blue")
         }
     }
 }

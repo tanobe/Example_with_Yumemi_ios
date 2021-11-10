@@ -16,11 +16,17 @@ class RootViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let viewController = R.storyboard.weather.instantiateInitialViewController()!
-        viewController.weatherModel = WeatherModelImpl()
-        viewController.disasterModel = DisasterModelImpl()
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true, completion: nil)
+        //        let viewController = R.storyboard.weather.instantiateInitialViewController()!
+        //        viewController.weatherModel = WeatherModelImpl()
+        //        viewController.disasterModel = DisasterModelImpl()
+        //        viewController.modalPresentationStyle = .fullScreen
+        //        present(viewController, animated: true, completion: nil)
+                let sb = UIStoryboard(name: "Weather", bundle: nil)
+                let vc = sb.instantiateInitialViewController() as! WeatherViewController
+                vc.weatherModel = WeatherModelImpl()
+                vc.disasterModel = DisasterModelImpl()
+                vc.modalPresentationStyle = .fullScreen
+                present(vc, animated: true, completion: nil)
     }
 
     /*
