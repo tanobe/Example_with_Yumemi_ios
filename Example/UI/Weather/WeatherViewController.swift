@@ -25,11 +25,13 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var maxTempLabel: UILabel!
     @IBOutlet weak var disasterLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    private let notificationCenter = NotificationCenter.default
+    private var token: NSObjectProtocol!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let center = NotificationCenter.default
-        center.addObserver(forName: UIApplication.didBecomeActiveNotification,
+        
+        token = notificationCenter.addObserver(forName: UIApplication.didBecomeActiveNotification,
                            object: nil,
                            queue: nil) { [weak self] _ in
             guard let self = self else {
@@ -37,11 +39,11 @@ class WeatherViewController: UIViewController {
             }
             self.loadWeather()
         }
-        center.removeObserver(UIApplication.didBecomeActiveNotification)
     }
     
     deinit {
         print(#function)
+        notificationCenter.removeObserver(token!)
     }
     
     override func viewDidAppear(_ animated: Bool) {
