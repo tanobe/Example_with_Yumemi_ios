@@ -43,10 +43,9 @@ class WeatherViewController: UIViewController {
     
     deinit {
         print(#function)
-        guard let token = token else {
-            return
+        if let token = token {
+            notificationCenter.removeObserver(token)
         }
-        notificationCenter.removeObserver(token)
     }
     
     override func viewDidAppear(_ animated: Bool) {
