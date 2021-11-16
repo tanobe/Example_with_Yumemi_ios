@@ -26,7 +26,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var disasterLabel: UILabel!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     private let notificationCenter = NotificationCenter.default
-    private var token: NSObjectProtocol!
+    private var token: NSObjectProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
