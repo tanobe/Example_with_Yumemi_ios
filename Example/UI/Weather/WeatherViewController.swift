@@ -28,24 +28,36 @@ class WeatherViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         NotificationCenter.default.addObserver(forName: UIApplication.didBecomeActiveNotification, object: nil, queue: nil) { [unowned self] notification in
-            self.loadWeather(notification.object)
+            self.loadWeather()
         }
     }
     
     deinit {
         print(#function)
     }
-            
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadWeather()
+    }
+    
     @IBAction func dismiss(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func loadWeather(_ sender: Any?) {
+    @IBAction func reloadButton(_ sender: Any?) {
+        self.loadWeather()
+    }
+    
+    func loadWeather() {
         self.activityIndicator.startAnimating()
-        weatherModel.fetchWeather(at: "tokyo", date: Date()) { result in
-            DispatchQueue.main.async {
+        self.weatherModel.fetchWeather(at: "tokyo", date: Date()) { result in
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
                 self.activityIndicator.stopAnimating()
                 self.handleWeather(result: result)
             }
